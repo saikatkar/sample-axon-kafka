@@ -16,6 +16,10 @@ public class AccountCreatedEvent extends BaseEvent<String> {
 		this.setBalance(balance);
 	
 	}
+	
+	public AccountCreatedEvent() {
+		
+	}
 	public String getAccHolder() {
 		return accHolder;
 	}
