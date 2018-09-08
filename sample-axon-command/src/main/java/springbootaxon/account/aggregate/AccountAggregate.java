@@ -1,13 +1,15 @@
 package springbootaxon.account.aggregate;
 
+import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
+
 import java.math.BigDecimal;
 
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
-
-import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
+import org.axonframework.eventsourcing.EventSourcingRepository;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
 import springbootaxon.account.command.AccountCreateCommand;
@@ -19,10 +21,13 @@ import springbootaxon.account.event.MoneyWithdrawnEvent;
 import springbootaxon.account.exception.InsufficientBalanceException;
 
 @Aggregate
-public class AccountAggregate {
-
+public class AccountAggregate{
+	
+	@Autowired
+	private EventSourcingRepository<AccountAggregate> repo;
+	
 	@AggregateIdentifier
-	private String accountNo;
+	private String id;
 	
 	private BigDecimal balance;
 	
@@ -45,11 +50,11 @@ public class AccountAggregate {
 	}
 
 	public String getAccountNo() {
-		return accountNo;
+		return id;
 	}
 
 	public void setAccountNo(String accountNo) {
-		this.accountNo = accountNo;
+		this.id = accountNo;
 	}
 	
 	public AccountAggregate() {
@@ -67,7 +72,7 @@ public class AccountAggregate {
 	@EventSourcingHandler
 	public void handle(AccountCreatedEvent event) {
 		
-		this.accountNo = event.getId();
+		this.id = event.getId();
 		this.accountHolder = event.getAccHolder();
 		this.balance = event.getBalance();
 	}
@@ -80,7 +85,10 @@ public class AccountAggregate {
 	
 	@EventSourcingHandler
 	public void handle(MoneyDepositedEvent event) {
+		//AccountAggregate aggregate = repository.load(event.getId()).getWrappedAggregate().getAggregateRoot();
+		System.out.println("balance: "+this.balance.toString());
 		this.balance = this.balance.add(event.getAmount());
+		
 	}
 	
 	@CommandHandler
