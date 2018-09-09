@@ -22,15 +22,18 @@ public class Account implements Serializable{
 	private BigDecimal balance;
 	
 	private String accHolder;
+	
+	private String accHolderName;
 
 	private String lastUpdated;
 	
-	public Account(String accountNo, BigDecimal balance, String accHolder, String lastUpdated) {
+	public Account(String accountNo, BigDecimal balance, String accHolder, String accHolderName,String lastUpdated) {
 		super();
 		this.accountNo = accountNo;
 		this.balance = balance;
 		this.accHolder = accHolder;
 		this.lastUpdated = lastUpdated;
+		this.accHolderName = accHolderName;
 	}
 
 	public String getAccHolder() {
@@ -63,6 +66,14 @@ public class Account implements Serializable{
 
 	public void setLastUpdated(String lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	public String getAccHolderName() {
+		return accHolderName;
+	}
+
+	public void setAccHolderName(String accHolderName) {
+		this.accHolderName = accHolderName;
 	}
 
 }

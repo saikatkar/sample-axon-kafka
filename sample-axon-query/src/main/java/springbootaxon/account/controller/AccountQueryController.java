@@ -29,7 +29,7 @@ public class AccountQueryController {
 	
 	@EventHandler
 	public void on(AccountCreatedEvent event,@Timestamp Instant instant) {
-		Account account = new Account(event.getId(),event.getBalance(),event.getAccHolder(),instant.toString());
+		Account account = new Account(event.getId(),event.getBalance(),event.getAccHolder(),event.getAccHolderName(),instant.toString());
 		
 		accRepo.insert(account);
 		

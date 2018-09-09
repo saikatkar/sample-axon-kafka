@@ -32,6 +32,8 @@ public class AccountAggregate{
 	private BigDecimal balance;
 	
 	private String accountHolder;
+	
+	private String accHolderName;
 
 	public String getAccountHolder() {
 		return accountHolder;
@@ -66,7 +68,7 @@ public class AccountAggregate{
 		
 		Assert.hasLength(command.getAccountHolder(), "Account holder must have a name");
 		Assert.hasLength(command.getId(), "Account id must have length greater than Zero");
-		apply(new AccountCreatedEvent(command.getId(), command.getAccountHolder(), new BigDecimal("0")));
+		apply(new AccountCreatedEvent(command.getId(), command.getAccountHolder(), command.getAccountHolderName(),new BigDecimal("0")));
 	}
 	
 	@EventSourcingHandler
@@ -74,6 +76,7 @@ public class AccountAggregate{
 		
 		this.id = event.getId();
 		this.accountHolder = event.getAccHolder();
+		this.accHolderName = event.getAccHolderName();
 		this.balance = event.getBalance();
 	}
 	
@@ -105,5 +108,13 @@ public class AccountAggregate{
 	@EventSourcingHandler
 	public void handle(MoneyWithdrawnEvent event) {
 		this.balance = this.balance.subtract((event.getAmount()));
+	}
+
+	public String getAccHolderName() {
+		return accHolderName;
+	}
+
+	public void setAccHolderName(String accHolderName) {
+		this.accHolderName = accHolderName;
 	}
 }

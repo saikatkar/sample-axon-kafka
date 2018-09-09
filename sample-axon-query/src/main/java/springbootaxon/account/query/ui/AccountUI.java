@@ -1,6 +1,7 @@
 package springbootaxon.account.query.ui;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.queryhandling.QueryGateway;
@@ -21,6 +22,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import springbootaxon.account.command.AccountCreateCommand;
 import springbootaxon.account.command.DepositMoneyCommand;
 import springbootaxon.account.command.WithdrawMoneyCommand;
 import springbootaxon.account.model.Account;
@@ -48,7 +50,7 @@ public class AccountUI extends UI{
 	protected void init(VaadinRequest vaadinRequest) {
         HorizontalLayout commandBar = new HorizontalLayout();
         commandBar.setSizeFull();
-        commandBar.addComponents(issuePanel(), redeemPanel());
+        commandBar.addComponents(createPanel(),issuePanel(), redeemPanel());
 
         VerticalLayout layout = new VerticalLayout();
         layout.addComponents(commandBar, summaryGrid());
@@ -71,6 +73,25 @@ public class AccountUI extends UI{
         });
     }
 	
+	private Panel createPanel() {
+        TextField id = new TextField("Reseller Id");
+        TextField name = new TextField("Reseller Name");
+        Button submit = new Button("Submit");
+
+        submit.addClickListener(evt -> {
+            commandGateway.sendAndWait(new AccountCreateCommand(UUID.randomUUID().toString(),id.getValue(), name.getValue()));
+            Notification.show("Success", Notification.Type.HUMANIZED_MESSAGE)
+                    .addCloseListener(e -> accSummaryDataProvider.refreshAll());
+        });
+
+        FormLayout form = new FormLayout();
+        form.addComponents(id, name, submit);
+        form.setMargin(true);
+
+        Panel panel = new Panel("Create Account");
+        panel.setContent(form);
+        return panel;
+   }
 	private Panel issuePanel() {
         TextField id = new TextField("Account No");
         TextField amount = new TextField("Amount");
@@ -86,10 +107,11 @@ public class AccountUI extends UI{
         form.addComponents(id, amount, submit);
         form.setMargin(true);
 
-        Panel panel = new Panel("Deposit Money");
+        Panel panel = new Panel("Deposit Amount");
         panel.setContent(form);
         return panel;
    }
+	
 	private Panel redeemPanel() {
         TextField id = new TextField("Account No");
         TextField amount = new TextField("Amount");
@@ -105,7 +127,7 @@ public class AccountUI extends UI{
         form.addComponents(id, amount, submit);
         form.setMargin(true);
 
-        Panel panel = new Panel("Withdraw money");
+        Panel panel = new Panel("Withdraw Amount");
         panel.setContent(form);
         return panel;
     }
@@ -114,8 +136,9 @@ public class AccountUI extends UI{
         accSummaryDataProvider = new AccountSummaryDataProvider(queryGateway);
         Grid<Account> grid = new Grid<>();
         grid.addColumn(Account::getAccountNo).setCaption("Account No");
+        grid.addColumn(Account::getAccHolder).setCaption("Reseller Id");
+        grid.addColumn(Account::getAccHolderName).setCaption("Reseller Name");
         grid.addColumn(Account::getBalance).setCaption("Account Balance");
-        grid.addColumn(Account::getAccHolder).setCaption("Account Holder");
         grid.addColumn(Account::getLastUpdated).setCaption("Last Updated");
         grid.setSizeFull();
         grid.setDataProvider(accSummaryDataProvider);

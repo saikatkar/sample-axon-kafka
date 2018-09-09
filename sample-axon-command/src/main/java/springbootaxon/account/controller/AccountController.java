@@ -46,11 +46,11 @@ public class AccountController {
 		return eventStore.readEvents(id).asStream().map(s -> s.getPayload()).collect(Collectors.toList());
 	}
 
-	@PostMapping
-	public CompletableFuture<String> createAccount(@RequestBody AccountOwner user) {
-		String id = UUID.randomUUID().toString();
-		return commandGateway.send(new AccountCreateCommand(id, user.getName()));
-	}
+//	@PostMapping
+//	public CompletableFuture<String> createAccount(@RequestBody AccountOwner user) {
+//		String id = UUID.randomUUID().toString();
+//		return commandGateway.send(new AccountCreateCommand(id, user.getName()));
+//	}
 
 	@PutMapping(path = "/deposit/{accountId}")
 	public CompletableFuture<String> deposit(@RequestBody Amount ammount, @PathVariable String accountId) {

@@ -9,17 +9,17 @@ import java.math.BigDecimal;
 public class AccountCreatedEvent extends BaseEvent<String> {
 
 	private String accHolder;
+	private String accHolderName;
 	private BigDecimal balance;
-	public AccountCreatedEvent(String id,String accHolder,BigDecimal balance) {
+	public AccountCreatedEvent(String id,String accHolder,String accHolderName,BigDecimal balance) {
 		super(id);
 		this.setAccHolder(accHolder);
 		this.setBalance(balance);
+		this.setAccHolderName(accHolderName);
 	
 	}
 	
-	public AccountCreatedEvent() {
-		
-	}
+	public AccountCreatedEvent() {}
 	public String getAccHolder() {
 		return accHolder;
 	}
@@ -31,6 +31,12 @@ public class AccountCreatedEvent extends BaseEvent<String> {
 	}
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
+	}
+	public String getAccHolderName() {
+		return accHolderName;
+	}
+	public void setAccHolderName(String accHolderName) {
+		this.accHolderName = accHolderName;
 	}
 
 }
