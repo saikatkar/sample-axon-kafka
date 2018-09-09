@@ -6,12 +6,13 @@ import org.springframework.util.Assert;
 public class BaseCommand<T> {
 
 	@TargetAggregateIdentifier
-	private final T id;
+	private  T id;
 
 	public BaseCommand(T id) {
 		Assert.notNull(id, "Id must be not null");
 		this.id = id;
 	}
+	public BaseCommand() {}
 
 	public T getId() {
 		return id;

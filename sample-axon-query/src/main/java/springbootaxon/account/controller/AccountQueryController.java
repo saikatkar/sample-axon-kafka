@@ -55,13 +55,13 @@ public class AccountQueryController {
 		accRepo.save(account);
 		
 	}
-
+	
 	@GetMapping("/details")
 	public List<Account> getAccDetails() {
 		return accRepo.findAll();
 	}
 	
-	@GetMapping("/details/{id")
+	@GetMapping("/details/{id}")
 	public Account getAccDetails(@PathVariable String id) {
 		return accRepo.findByAccountNo(id);
 	}

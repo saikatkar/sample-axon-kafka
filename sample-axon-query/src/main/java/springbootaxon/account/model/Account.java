@@ -2,7 +2,6 @@ package springbootaxon.account.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 

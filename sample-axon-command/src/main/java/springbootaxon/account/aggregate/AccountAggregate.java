@@ -79,6 +79,7 @@ public class AccountAggregate{
 	
 	@CommandHandler
 	public void on(DepositMoneyCommand command) {
+		System.out.println("deposit  received "+command.getId());
 		Assert.isTrue(command.getAmount().compareTo(BigDecimal.ZERO) > 0 , "Amount should be a positive number");
 		apply(new MoneyDepositedEvent(command.getId(), command.getAmount()));
 	}
@@ -93,6 +94,7 @@ public class AccountAggregate{
 	
 	@CommandHandler
 	public void on(WithdrawMoneyCommand command) {
+		System.out.println("withdraw  received "+command.getId());
 		Assert.isTrue(command.getAmount().compareTo(BigDecimal.ZERO) > 0 , "Amount should be a positive number");
 		if(command.getAmount().compareTo(this.balance) > 0 ) {
 			throw new InsufficientBalanceException("Insufficient balance. Trying to withdraw:" + command.getAmount() + ", but current balance is: " + this.balance);

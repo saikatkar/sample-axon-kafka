@@ -13,6 +13,7 @@
 	<modules>
 		<module>sample-axon-query</module>
 		<module>sample-axon-command</module>
+		<module>sample-axon-discovery</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
