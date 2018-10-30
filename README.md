@@ -1,4 +1,4 @@
-# Sample-Axon
+# Sample-Axon-Kafka
 Sample CQRS and Event Souring impleneted using Axon Framework.MongoDB is used as the event source and Apache Kafka to distribute the events between command and query side.The UI has been developed using Vaadin Framework.
 
 ## Architecture Overview
