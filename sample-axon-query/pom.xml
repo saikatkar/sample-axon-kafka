@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<vaadin.version>8.2.0</vaadin.version>
+		<vaadin.version>8.12.3</vaadin.version>
 		<axon.version>3.3.3</axon.version>
 		<spring-cloud.version>Edgware.SR4</spring-cloud.version>
 		<project.root>${basedir}/../</project.root>
